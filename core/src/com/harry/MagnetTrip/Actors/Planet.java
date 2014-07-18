@@ -18,6 +18,8 @@ public class Planet extends Box2dActor {
     protected Animation planetFieldInactiveAnimation;
     protected Animation currentAnimation;
 
+
+
     public Planet(World world, Animation planetFieldactiveAnimation, Vector2 pos, int magneticRange, float width, float height) {
         super(world, Assets.planetAnimation, pos, BodyDef.BodyType.StaticBody, width, height);
         this.magneticRange = magneticRange;
@@ -43,6 +45,10 @@ public class Planet extends Box2dActor {
     public int getMagnetPower() {
         return magneticRange;
     } //나중에 바꾸기
+
+    public boolean isCarIn(Car car) {
+        return false;
+    }
 
     public boolean isActive() {
         return isActive;
