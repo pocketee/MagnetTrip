@@ -12,14 +12,14 @@ import com.harry.MagnetTrip.Assets;
 /**
  * Created by jh on 2014-07-16.
  */
-public abstract class Planet extends Box2dActor {
+public class Planet extends Box2dActor implements ForceObstacle {
     protected boolean isActive;
     protected int magneticRange;
     protected Animation planetFieldActiveAnimation;
     protected Animation planetFieldInactiveAnimation;
     protected Animation currentAnimation;
 
-    public abstract void applyForceToCar(Body carBody);
+
 
 
     public Planet(World world, Animation planetFieldactiveAnimation, Vector2 pos, int magneticRange, float width, float height) {
@@ -49,14 +49,18 @@ public abstract class Planet extends Box2dActor {
         return magneticRange;
     } //나중에 바꾸기
 
-    public boolean isCarIn(Car car) {
-        return false;
+
+    @Override
+    public void applyForceToCar(Body carBody) {
+
     }
 
+    @Override
     public boolean isActive() {
         return isActive;
     }
 
+    @Override
     public void setActive(boolean isActive) {
         this.isActive = isActive;
         if (isActive) {
@@ -64,5 +68,13 @@ public abstract class Planet extends Box2dActor {
         } else {
             currentAnimation = planetFieldInactiveAnimation;
         }
+    }
+
+    @Override
+    public boolean lessThanFloat(float standard) { //기준점 보다 위치가 낮은가?
+        if(getCenterX() < standard) {
+           return true;
+        }
+        return false;
     }
 }

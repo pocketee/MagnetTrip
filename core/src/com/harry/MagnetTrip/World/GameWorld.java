@@ -41,7 +41,7 @@ public class GameWorld implements InputProcessor, ContactListener{
     //ui variables
     protected TextActor scoreText;
 
-    protected ArrayList<Planet> planetList;
+    protected ArrayList<ForceObstacle> forcePlanetList;
     protected ArrayList<MyActor> mapPieceList;
     protected Stage stage;
     protected World world;
@@ -58,7 +58,7 @@ public class GameWorld implements InputProcessor, ContactListener{
         Gdx.app.log("GameWorld", "height = " + displayHeight);
 
         mapPieceList = new ArrayList<MyActor>();
-        planetList = new ArrayList<Planet>();
+        forcePlanetList = new ArrayList<ForceObstacle>();
 
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
@@ -185,24 +185,24 @@ public class GameWorld implements InputProcessor, ContactListener{
 
     private void checkPlanetAction() {
         Body carBody = car.getBody();
-        for (Planet m : planetList) {
-            if(m.isActive()) {
-                m.applyForceToCar(carBody);
+        for (ForceObstacle fo : forcePlanetList) {
+            if(fo.isActive()) {
+                fo.applyForceToCar(carBody);
             }
         }
     }
 
     private void checkRemoveObstacles() {
-        ArrayList<Box2dActor> obstaclestoRemove = new ArrayList<Box2dActor>();
+        ArrayList<ForceObstacle> obstaclestoRemove = new ArrayList<ForceObstacle>();
 
-        for(Planet p : planetList) {
-            if (p.getCenterX()+displayWidth < car.getCenterX()) {
-                obstaclestoRemove.add(p);
+        for(ForceObstacle fo : forcePlanetList) {
+            if (fo.lessThanFloat(car.getCenterX() - displayWidth)) {
+                obstaclestoRemove.add(fo);
             }
         }
 
-        for(Box2dActor p : obstaclestoRemove) {
-            removeMyAcotr(p);
+        for(ForceObstacle fo : obstaclestoRemove) {
+            removeMyAcotr((MyActor)fo);
         }
     }
 
@@ -251,8 +251,8 @@ public class GameWorld implements InputProcessor, ContactListener{
                 state = GAME_RUNNING;
                 break;
             case GAME_RUNNING:
-                for (Planet m : planetList) {
-                    m.setActive(true);
+                for (ForceObstacle fo : forcePlanetList) {
+                    fo.setActive(true);
                 }
                 break;
             case GAME_PAUSED:
@@ -272,8 +272,8 @@ public class GameWorld implements InputProcessor, ContactListener{
 
                 break;
             case GAME_RUNNING:
-                for (Planet m : planetList) {
-                    m.setActive(false);
+                for (ForceObstacle fo : forcePlanetList) {
+                    fo.setActive(false);
                 }
                 break;
             case GAME_PAUSED:
@@ -323,12 +323,12 @@ public class GameWorld implements InputProcessor, ContactListener{
         */
     //MyActor related
     public void addPlanet(Planet Planet) {
-        planetList.add(Planet);
+        forcePlanetList.add(Planet);
         actorGroup.addActor(Planet);
     }
 
     public void removeMyAcotr(MyActor actor) {
-        planetList.remove(actor);
+        forcePlanetList.remove(actor);
         actor.destroy();
     }
 
