@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.harry.MagnetTrip.Actors.BasicWall;
 import com.harry.MagnetTrip.Actors.PullPlanet;
 import com.harry.MagnetTrip.Actors.MyActor;
 import com.harry.MagnetTrip.Actors.PushPlanet;
@@ -51,10 +52,13 @@ public class MapGenerator {
 
             switch (data.getObstacleType()) {
                 case ObstacleData.PULL_PLANET:
-                    gameWorld.addPlanet(new PullPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
+                    gameWorld.addObstacle(new PullPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
                     break;
                 case ObstacleData.PUSH_PLANET:
-                    gameWorld.addPlanet(new PushPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
+                    gameWorld.addObstacle(new PushPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
+                    break;
+                case ObstacleData.BASIC_WALL:
+                    gameWorld.addObstacle(new BasicWall(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getWidth(), data.getHeight()));
                     break;
             }
         }

@@ -16,6 +16,7 @@ public class Assets {
     public static Texture planetFieldInactiveSheet;
     public static Texture pullPlanetFieldActiveSheet;
     public static Texture psuhPlanetFieldActiveSheet;
+    public static Texture basicWallSheet;
     public static Texture mapSheet;
 
 
@@ -26,6 +27,7 @@ public class Assets {
     public static Animation planetFieldInactiveAnimation;
     public static Animation pullPlanetFieldActiveAnimation;
     public static Animation pushPlanetFieldActiveAnimation;
+    public static Animation basicWallAnimation;
     public static Animation mapAnimation;
 
     public static void load() {
@@ -35,6 +37,7 @@ public class Assets {
         planetFieldInactiveSheet = new Texture(Gdx.files.internal("planet_field_inactive.png"));
         pullPlanetFieldActiveSheet = new Texture(Gdx.files.internal("pull_planet_field_active.png"));
         psuhPlanetFieldActiveSheet = new Texture(Gdx.files.internal("push_planet_field_active.png"));
+        basicWallSheet = new Texture(Gdx.files.internal("basic_wall.png"));
         mapSheet = new Texture(Gdx.files.internal("space_background_short.jpg"));
                                                                                 //width, height dpi
         forwardCarAnimation = loadAnimation(forwardCarSheet, 0.025f, 1, 1);     //168, 100      30dpi
@@ -43,6 +46,7 @@ public class Assets {
         planetFieldInactiveAnimation = loadAnimation(planetFieldInactiveSheet, 0.025f, 1, 1); //560, 560 100.80dpi
         pullPlanetFieldActiveAnimation = loadAnimation(pullPlanetFieldActiveSheet, 0.025f, 1, 1);
         pushPlanetFieldActiveAnimation = loadAnimation(psuhPlanetFieldActiveSheet, 0.025f, 1, 1);
+        basicWallAnimation = loadAnimation(basicWallSheet, 0.025f, 1, 1);
         mapAnimation = loadAnimation(mapSheet, 0.025f, 1, 1);
     }
 

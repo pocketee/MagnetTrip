@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 public class ObstacleData {
     public final static int PULL_PLANET = 1;
     public final static int PUSH_PLANET = 2;
+    public final static int BASIC_WALL = 3;
 
     protected int obstacleType;
     protected Vector2 pos;

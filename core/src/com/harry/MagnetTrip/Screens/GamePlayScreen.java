@@ -39,20 +39,21 @@ public class GamePlayScreen implements Screen {
         world = new GameWorld(viewport);
 
 
-        /*
+
         //json generate
         FileHandle file = Gdx.files.local("mapDatas.json");
         MapPieceFileWriter mapPieceFileWriter = new MapPieceFileWriter();
 
         ObstacleData obstacleData1 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(100, 150), 3, 70, 70);
         ObstacleData obstacleData2 = new ObstacleData(ObstacleData.PUSH_PLANET, new Vector2(400, 380), 4, 70, 70);
-        ObstacleData obstacleData3 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(600, 150), 4, 70, 70);
+        ObstacleData obstacleData3 = new ObstacleData(ObstacleData.BASIC_WALL, new Vector2(450, 150), 4, 200, 20);
         MapPiece mapPiece = new MapPiece();
         mapPiece.add(obstacleData1);
         mapPiece.add(obstacleData2);
         mapPiece.add(obstacleData3);
         mapPieceFileWriter.add(mapPiece);
 
+        /*
         obstacleData1 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(100, 390), 3, 70, 70);
         obstacleData2 = new ObstacleData(ObstacleData.PULL_PLANET,new Vector2(400, 150), 5, 70, 70);
         obstacleData3 = new ObstacleData(ObstacleData.PULL_PLANET,new Vector2(600, 300), 5, 70, 70);
@@ -70,14 +71,14 @@ public class GamePlayScreen implements Screen {
         mapPiece.add(obstacleData2);
         mapPiece.add(obstacleData3);
         mapPieceFileWriter.add(mapPiece);
+        */
 
         mapPieceFileWriter.writeFile(file);
 
         FileHandle readFile = Gdx.files.internal("mapDatas.json");
 
         MapPiecesFileReader mapPiecesFileReader = new MapPiecesFileReader(readFile);
-        Gdx.app.log("GamePlayScreen", "mapPieces Test = " + mapPiecesFileReader.get(1).get(0));
-        */
+        Gdx.app.log("GamePlayScreen", "mapPieces Test = " + mapPiecesFileReader.get(0).get(0));
     }
 
     //Screen implemented methods

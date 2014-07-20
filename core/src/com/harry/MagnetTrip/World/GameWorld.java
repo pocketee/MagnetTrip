@@ -159,7 +159,7 @@ public class GameWorld implements InputProcessor, ContactListener{
     //check realted
     private void checkAll() {
         checkGameOver();
-        checkObstacleAction();
+        checkObstacle();
         checkGenerateMap();
     }
 
@@ -178,12 +178,12 @@ public class GameWorld implements InputProcessor, ContactListener{
         }
     }
 
-    private void checkObstacleAction() {
-        checkPlanetAction();
+    private void checkObstacle() {
+        checkObstacleAction();
         checkRemoveObstacles();
     }
 
-    private void checkPlanetAction() {
+    private void checkObstacleAction() {
         Body carBody = car.getBody();
         for (ForceObstacle fo : forcePlanetList) {
             if(fo.isActive()) {
@@ -322,9 +322,9 @@ public class GameWorld implements InputProcessor, ContactListener{
         }
         */
     //MyActor related
-    public void addPlanet(Planet Planet) {
-        forcePlanetList.add(Planet);
-        actorGroup.addActor(Planet);
+    public void addObstacle(ForceObstacle forceObstacle) {
+        forcePlanetList.add(forceObstacle);
+        actorGroup.addActor((MyActor)forceObstacle);
     }
 
     public void removeMyAcotr(MyActor actor) {
