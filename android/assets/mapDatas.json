@@ -27,7 +27,7 @@
 			height: 20,
 			obstacleType: 3,
 			pos: {
-				x: 300,
+				x: 450,
 				y: 150
 			},
 			magneticRange: 4
