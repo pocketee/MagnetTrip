@@ -1,6 +1,7 @@
 package com.harry.MagnetTrip.Actors;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.harry.MagnetTrip.Assets;
 
@@ -10,5 +11,10 @@ import com.harry.MagnetTrip.Assets;
 public class PushPlanet extends Planet{
     public PushPlanet(World world, Vector2 pos, int magneticRange, float width, float height) {
         super(world, Assets.pushPlanetFieldActiveAnimation, pos, magneticRange, width, height);
+    }
+
+    @Override
+    public void applyForceToCar(Body carBody) {
+
     }
 }

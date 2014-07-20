@@ -51,10 +51,10 @@ public class MapGenerator {
 
             switch (data.getObstacleType()) {
                 case ObstacleData.PULL_PLANET:
-                    gameWorld.addPullPlanet(new PullPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
+                    gameWorld.addPlanet(new PullPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
                     break;
                 case ObstacleData.PUSH_PLANET:
-                    gameWorld.addPushPlanet(new PushPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
+                    gameWorld.addPlanet(new PushPlanet(world, data.getPos().add(mapCount * gameWorld.getDisplayWidth(), 0), data.getMagneticRange(), data.getWidth(), data.getHeight()));
                     break;
             }
         }

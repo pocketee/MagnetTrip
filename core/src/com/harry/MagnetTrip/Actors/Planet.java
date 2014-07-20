@@ -3,6 +3,7 @@ package com.harry.MagnetTrip.Actors;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -11,13 +12,14 @@ import com.harry.MagnetTrip.Assets;
 /**
  * Created by jh on 2014-07-16.
  */
-public class Planet extends Box2dActor {
+public abstract class Planet extends Box2dActor {
     protected boolean isActive;
     protected int magneticRange;
     protected Animation planetFieldActiveAnimation;
     protected Animation planetFieldInactiveAnimation;
     protected Animation currentAnimation;
 
+    public abstract void applyForceToCar(Body carBody);
 
 
     public Planet(World world, Animation planetFieldactiveAnimation, Vector2 pos, int magneticRange, float width, float height) {
@@ -30,6 +32,7 @@ public class Planet extends Box2dActor {
         makeCircleFixture(width/2, 1f, 0);
         setTouchable(Touchable.enabled);
     }
+
 
 
     @Override

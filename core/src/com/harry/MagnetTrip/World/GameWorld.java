@@ -41,10 +41,8 @@ public class GameWorld implements InputProcessor, ContactListener{
     //ui variables
     protected TextActor scoreText;
 
-    protected ArrayList<PullPlanet> pullPlanetList;
-    protected ArrayList<PushPlanet> pushPlanetList;
+    protected ArrayList<Planet> planetList;
     protected ArrayList<MyActor> mapPieceList;
-    protected ArrayList<Box2dActor> obstaclestoRemove;
     protected Stage stage;
     protected World world;
     protected Car car;
@@ -60,9 +58,8 @@ public class GameWorld implements InputProcessor, ContactListener{
         Gdx.app.log("GameWorld", "height = " + displayHeight);
 
         mapPieceList = new ArrayList<MyActor>();
-        pullPlanetList = new ArrayList<PullPlanet>();
-        pushPlanetList = new ArrayList<PushPlanet>();
-        obstaclestoRemove = new ArrayList<Box2dActor>();
+        planetList = new ArrayList<Planet>();
+
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
         stage = new Stage();
@@ -166,13 +163,6 @@ public class GameWorld implements InputProcessor, ContactListener{
         checkGenerateMap();
     }
 
-    private void checkObstacleAction() {
-        checkPullPlanetAction();
-        checkPushPlanetAction();
-        checkRemoveObstacles();
-    }
-
-
     private void checkGameOver() {
         if(car.getY()<(0-30) || car.getY() > (displayHeight+30)) {
             state = GAME_OVER;
@@ -188,84 +178,38 @@ public class GameWorld implements InputProcessor, ContactListener{
         }
     }
 
+    private void checkObstacleAction() {
+        checkPlanetAction();
+        checkRemoveObstacles();
+    }
+
+    private void checkPlanetAction() {
+        Body carBody = car.getBody();
+        for (Planet m : planetList) {
+            if(m.isActive()) {
+                m.applyForceToCar(carBody);
+            }
+        }
+    }
+
     private void checkRemoveObstacles() {
-        obstaclestoRemove.clear();
+        ArrayList<Box2dActor> obstaclestoRemove = new ArrayList<Box2dActor>();
 
-        for(PullPlanet p : pullPlanetList) {
+        for(Planet p : planetList) {
             if (p.getCenterX()+displayWidth < car.getCenterX()) {
                 obstaclestoRemove.add(p);
             }
         }
-
-        for(PushPlanet p : pushPlanetList) {
-            if (p.getCenterX()+displayWidth < car.getCenterX()) {
-                obstaclestoRemove.add(p);
-            }
-        }
-
 
         for(Box2dActor p : obstaclestoRemove) {
-            if(p.getClass() == PullPlanet.class) {
-                removePullMagnet((PullPlanet) p);
-            } else if(p.getClass() == PushPlanet.class) {
-                removePushMagnet((PushPlanet) p);
-            }
+            removeMyAcotr(p);
         }
     }
 
-    private void checkPullPlanetAction() {
-        Body carBody = car.getBody();
-        for (PullPlanet m : pullPlanetList) {
-            if(!m.isActive()) {
-                break;
-            }
-
-            CircleShape magnetShape = (CircleShape) m.getBody().getFixtureList().get(0).getShape();
-            float magnetRadius = magnetShape.getRadius();
-            Vector2 magnetPosition = m.getBody().getWorldCenter();
-            Vector2 magnetDistance = new Vector2(0, 0);
-
-            magnetDistance.add(magnetPosition);
-            magnetDistance.sub(car.getBody().getWorldCenter());
-            float finalDistance = magnetDistance.len();
 
 
-            if (finalDistance <= m.getMagnetPower() * magnetRadius) {
-
-                float factor = carBody.getMass() / finalDistance / finalDistance * m.getMagnetPower() / 2.5f ;
-
-                magnetDistance.scl(factor);
-                carBody.applyForce(magnetDistance, carBody.getWorldCenter(), true);
-            }
-        }
-    }
-
-    private void checkPushPlanetAction() {
-        Body carBody = car.getBody();
-        for (PushPlanet p : pushPlanetList) {
-            if(!p.isActive()) {
-                break;
-            }
-
-            CircleShape magnetShape = (CircleShape) p.getBody().getFixtureList().get(0).getShape();
-            float magnetRadius = magnetShape.getRadius();
-            Vector2 magnetPosition = p.getBody().getWorldCenter();
-            Vector2 magnetDistance = new Vector2(0, 0);
-
-            magnetDistance.add(magnetPosition);
-            magnetDistance.sub(car.getBody().getWorldCenter());
-            float finalDistance = magnetDistance.len();
 
 
-            if (finalDistance <= p.getMagnetPower() * magnetRadius) {
-
-                float factor = carBody.getMass() / finalDistance / finalDistance * p.getMagnetPower() / 2.5f ;
-
-                magnetDistance.scl(-factor);
-                carBody.applyForce(magnetDistance, carBody.getWorldCenter(), true);
-            }
-        }
-    }
 
     public void draw() {
         stage.draw();
@@ -307,10 +251,7 @@ public class GameWorld implements InputProcessor, ContactListener{
                 state = GAME_RUNNING;
                 break;
             case GAME_RUNNING:
-                for (PullPlanet m : pullPlanetList) {
-                    m.setActive(true);
-                }
-                for (PushPlanet m : pushPlanetList) {
+                for (Planet m : planetList) {
                     m.setActive(true);
                 }
                 break;
@@ -331,10 +272,7 @@ public class GameWorld implements InputProcessor, ContactListener{
 
                 break;
             case GAME_RUNNING:
-                for (PullPlanet m : pullPlanetList) {
-                    m.setActive(false);
-                }
-                for (PushPlanet m : pushPlanetList) {
+                for (Planet m : planetList) {
                     m.setActive(false);
                 }
                 break;
@@ -384,24 +322,14 @@ public class GameWorld implements InputProcessor, ContactListener{
         }
         */
     //MyActor related
-    public void addPullPlanet(PullPlanet pullPlanet) {
-        pullPlanetList.add(pullPlanet);
-        actorGroup.addActor(pullPlanet);
+    public void addPlanet(Planet Planet) {
+        planetList.add(Planet);
+        actorGroup.addActor(Planet);
     }
 
-    public void addPushPlanet(PushPlanet pushPlanet) {
-        pushPlanetList.add(pushPlanet);
-        actorGroup.addActor(pushPlanet);
-    }
-
-    public void removePullMagnet(PullPlanet pullPlanet) {
-        pullPlanetList.remove(pullPlanet);
-        pullPlanet.destroy();
-    }
-
-    public void removePushMagnet(PushPlanet pushPlanet) {
-        pullPlanetList.remove(pushPlanet);
-        pushPlanet.destroy();
+    public void removeMyAcotr(MyActor actor) {
+        planetList.remove(actor);
+        actor.destroy();
     }
 
 
