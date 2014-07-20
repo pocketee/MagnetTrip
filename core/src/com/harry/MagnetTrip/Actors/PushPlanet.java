@@ -29,7 +29,7 @@ public class PushPlanet extends Planet {
         if (finalDistance <= getMagnetPower() * magnetRadius) {
             float factor = carBody.getMass() / finalDistance / finalDistance * getMagnetPower() / 2.5f ;
 
-            magnetDistance.scl(factor);
+            magnetDistance.scl(-factor);
             carBody.applyForce(magnetDistance, carBody.getWorldCenter(), true);
         }
     }
