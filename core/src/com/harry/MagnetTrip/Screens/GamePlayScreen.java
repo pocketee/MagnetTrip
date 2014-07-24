@@ -53,7 +53,7 @@ public class GamePlayScreen implements Screen {
         mapPiece.add(obstacleData3);
         mapPieceFileWriter.add(mapPiece);
 
-        /*
+
         obstacleData1 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(100, 390), 3, 70, 70);
         obstacleData2 = new ObstacleData(ObstacleData.PULL_PLANET,new Vector2(400, 150), 5, 70, 70);
         obstacleData3 = new ObstacleData(ObstacleData.PULL_PLANET,new Vector2(600, 300), 5, 70, 70);
@@ -64,14 +64,14 @@ public class GamePlayScreen implements Screen {
         mapPieceFileWriter.add(mapPiece);
 
         obstacleData1 = new ObstacleData(ObstacleData.PUSH_PLANET, new Vector2(100, 100), 3, 70, 70);
-        obstacleData2 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(450, 250), 4, 70, 70);
+        obstacleData2 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(350, 250), 4, 70, 70);
         obstacleData3 = new ObstacleData(ObstacleData.PULL_PLANET, new Vector2(600, 400), 4, 70, 70);
         mapPiece = new MapPiece();
         mapPiece.add(obstacleData1);
         mapPiece.add(obstacleData2);
         mapPiece.add(obstacleData3);
         mapPieceFileWriter.add(mapPiece);
-        */
+
 
         mapPieceFileWriter.writeFile(file);
 
